@@ -1,18 +1,46 @@
-// Cloudinary CDN — fast global delivery, auto-format, streaming
+// Cloudinary CDN — exact public IDs from upload
 const CLOUD = 'dhsyiussw'
 const BASE  = `https://res.cloudinary.com/${CLOUD}/video/upload`
 
-// f_auto: serves WebM/MP4 based on browser support
-// q_auto: auto quality
-// fl_streaming_attachment: enables byte-range / adaptive streaming
-const OPT = 'f_auto,q_auto:good'
+// Poster = first frame as JPEG (instant thumbnail, ~20KB)
+const poster = (publicId: string) =>
+  `https://res.cloudinary.com/${CLOUD}/video/upload/so_0,f_jpg,q_auto:good/${publicId}.jpg`
 
-const M  = (file: string) => `${BASE}/${OPT}/arnav/motion/${encodeURIComponent(file)}`
-const A  = (file: string) => `${BASE}/${OPT}/arnav/animation/${encodeURIComponent(file)}`
+// Direct Cloudinary URLs (version + public_id format)
+const MOTION = {
+  flowIq:      `${BASE}/v1784101304/Flow_IQ_pulkkm.mp4`,
+  crizpo9x16:  `${BASE}/v1784101268/crizpo_v2-2_9x16_d66n7k.mp4`,
+  crizpoV2:    `${BASE}/v1784101267/Crizpo_ver-2_qqaehm.mp4`,
+  parcelNotif: `${BASE}/v1784101248/Parcel_-_Notification_yiggkf.mp4`,
+  vmgDigital:  `${BASE}/v1784101244/VMG_DIGITAL_nax3ct.mp4`,
+  scheduleIq:  `${BASE}/v1784101241/Schedule_IQ_gn49iu.mp4`,
+  prospectIq:  `${BASE}/v1784101227/prospect-iq-crm-app-product-update-video_1-prospect-iq-crm-app-product-update-video_jklk9x.mp4`,
+  reel:        `${BASE}/v1784101225/3179100155_jnruf1.mp4`,
+  parcelMulti: `${BASE}/v1784101220/Parcel_multi-token_rh42xs.mp4`,
+  aiCadence:   `${BASE}/v1784101213/AI_Cadence_ipgzwx.mp4`,
+  credApp:     `${BASE}/v1784101204/Cred_app_tvxkyc.mp4`,
+}
 
-// Poster = first frame thumbnail (instant, no download needed)
-const MP = (file: string) => `https://res.cloudinary.com/${CLOUD}/video/upload/so_0,f_jpg,q_auto:good/arnav/motion/${encodeURIComponent(file)}.jpg`
-const AP = (file: string) => `https://res.cloudinary.com/${CLOUD}/video/upload/so_0,f_jpg,q_auto:good/arnav/animation/${encodeURIComponent(file)}.jpg`
+// Poster helpers — strip version prefix for poster URL
+const MP = (publicId: string) => poster(publicId)
+const mP = {
+  flowIq:      MP('Flow_IQ_pulkkm'),
+  crizpo9x16:  MP('crizpo_v2-2_9x16_d66n7k'),
+  crizpoV2:    MP('Crizpo_ver-2_qqaehm'),
+  parcelNotif: MP('Parcel_-_Notification_yiggkf'),
+  vmgDigital:  MP('VMG_DIGITAL_nax3ct'),
+  scheduleIq:  MP('Schedule_IQ_gn49iu'),
+  prospectIq:  MP('prospect-iq-crm-app-product-update-video_1-prospect-iq-crm-app-product-update-video_jklk9x'),
+  reel:        MP('3179100155_jnruf1'),
+  parcelMulti: MP('Parcel_multi-token_rh42xs'),
+  aiCadence:   MP('AI_Cadence_ipgzwx'),
+  credApp:     MP('Cred_app_tvxkyc'),
+}
+
+// 3D Animation — still from public/videos/3d-animation/ for now
+// (update once you share those Cloudinary URLs)
+const V3 = (name: string) => `/videos/3d-animation/${encodeURIComponent(name)}`
+const AP = (_: string) => ''   // no poster yet for animation
 
 export interface Project {
   id: string
@@ -48,7 +76,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'AI Cadence',
     software: ['After Effects', 'Premiere Pro'],
     description: 'Motion graphics for an AI productivity platform.',
-    thumbnail: '',          videoUrl: M('AI Cadence.mp4'),         poster: MP('AI Cadence.mp4'),
+    thumbnail: '',          videoUrl: MOTION.aiCadence,      poster: mP.aiCadence,
     tags: ['Motion Graphics', 'SaaS'], year: 2024, featured: true,
   },
   {
@@ -56,7 +84,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Cred',
     software: ['After Effects', 'Cinema 4D'],
     description: 'Premium product video for Cred.',
-    thumbnail: '',          videoUrl: M('Cred app.mp4'),           poster: MP('Cred app.mp4'),
+    thumbnail: '',          videoUrl: MOTION.credApp,        poster: mP.credApp,
     tags: ['Fintech', 'Product'], year: 2024, featured: true,
   },
   {
@@ -64,7 +92,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'VMG Digital',
     software: ['After Effects', 'DaVinci Resolve'],
     description: 'Brand anthem for a digital marketing agency.',
-    thumbnail: '',          videoUrl: M('VMG DIGITAL.mp4'),        poster: MP('VMG DIGITAL.mp4'),
+    thumbnail: '',          videoUrl: MOTION.vmgDigital,     poster: mP.vmgDigital,
     tags: ['Brand Film', 'Agency'], year: 2024, featured: true,
   },
   {
@@ -72,7 +100,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Flow IQ',
     software: ['After Effects', 'Premiere Pro'],
     description: 'Explainer for a workflow automation tool.',
-    thumbnail: '',          videoUrl: M('Flow IQ.mp4'),            poster: MP('Flow IQ.mp4'),
+    thumbnail: '',          videoUrl: MOTION.flowIq,         poster: mP.flowIq,
     tags: ['SaaS', 'Explainer'], year: 2024, featured: true,
   },
   {
@@ -80,7 +108,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Schedule IQ',
     software: ['After Effects', 'Premiere Pro'],
     description: 'Product launch for a scheduling platform.',
-    thumbnail: '',          videoUrl: M('Schedule IQ.mp4'),        poster: MP('Schedule IQ.mp4'),
+    thumbnail: '',          videoUrl: MOTION.scheduleIq,     poster: mP.scheduleIq,
     tags: ['Product Launch', 'SaaS'], year: 2024, featured: true,
   },
   {
@@ -88,7 +116,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Parcel',
     software: ['After Effects', 'Cinema 4D'],
     description: 'Feature explainer for multi-token payments.',
-    thumbnail: '',          videoUrl: M('Parcel multi-token.mp4'), poster: MP('Parcel multi-token.mp4'),
+    thumbnail: '',          videoUrl: MOTION.parcelMulti,    poster: mP.parcelMulti,
     tags: ['Web3', 'Explainer'], year: 2023,
   },
   {
@@ -96,7 +124,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Parcel',
     software: ['After Effects'],
     description: 'UI micro-animation.',
-    thumbnail: '',          videoUrl: M('Parcel - Notification.mp4'), poster: MP('Parcel - Notification.mp4'),
+    thumbnail: '',          videoUrl: MOTION.parcelNotif,    poster: mP.parcelNotif,
     tags: ['UI Motion', 'App'], year: 2023,
   },
   {
@@ -104,7 +132,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Crizpo',
     software: ['After Effects', 'Cinema 4D'],
     description: 'Version 2 launch campaign.',
-    thumbnail: '',          videoUrl: M('Crizpo ver-2.mp4'),       poster: MP('Crizpo ver-2.mp4'),
+    thumbnail: '',          videoUrl: MOTION.crizpoV2,       poster: mP.crizpoV2,
     tags: ['Brand Refresh'], year: 2023,
   },
   {
@@ -112,7 +140,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Crizpo',
     software: ['After Effects', 'Premiere Pro'],
     description: 'Vertical format for social media.',
-    thumbnail: '',          videoUrl: M('crizpo v2-2 (9x16).mp4'), poster: MP('crizpo v2-2 (9x16).mp4'),
+    thumbnail: '',          videoUrl: MOTION.crizpo9x16,     poster: mP.crizpo9x16,
     tags: ['Social Media', 'Reels'], year: 2023,
   },
   {
@@ -120,8 +148,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Prospect IQ',
     software: ['After Effects', 'Premiere Pro'],
     description: 'Product update for a CRM platform.',
-    thumbnail: '',          videoUrl: M('prospect-iq-crm-app-product-update-video_1-prospect-iq-crm-app-product-update-video.mp4'),
-    poster: MP('prospect-iq-crm-app-product-update-video_1-prospect-iq-crm-app-product-update-video.mp4'),
+    thumbnail: '',          videoUrl: MOTION.prospectIq,     poster: mP.prospectIq,
     tags: ['CRM', 'SaaS'], year: 2023,
   },
   {
@@ -129,7 +156,7 @@ export const projects: Project[] = [
     category: 'motion',     client: 'Personal',
     software: ['After Effects', 'DaVinci Resolve'],
     description: 'Compilation showreel.',
-    thumbnail: '',          videoUrl: M('3179100155.mp4'),         poster: MP('3179100155.mp4'),
+    thumbnail: '',          videoUrl: MOTION.reel,           poster: mP.reel,
     tags: ['Showreel'], year: 2024,
   },
 
@@ -138,133 +165,133 @@ export const projects: Project[] = [
     id: 'bag-anim',         title: 'BaG Commercial',
     category: 'animation',  client: 'Studio Project',
     software: ['Blender', 'Cinema 4D'], description: '3D product animation commercial.',
-    thumbnail: '',          videoUrl: A('BaG Anim Comm.MOV'),      poster: AP('BaG Anim Comm.MOV'),
+    thumbnail: '',          videoUrl: V3('BaG Anim Comm.MOV'),      poster: '',
     tags: ['3D Animation', 'Commercial'], year: 2024,
   },
   {
     id: 'band-jewellery',   title: 'Band 3D Jewellery',
     category: 'animation',  client: 'Studio Project',
     software: ['Cinema 4D', 'Octane'], description: 'Jewellery 3D animation.',
-    thumbnail: '',          videoUrl: A('Band 3d Jewellery Anim COmm.MOV'), poster: AP('Band 3d Jewellery Anim COmm.MOV'),
+    thumbnail: '',          videoUrl: V3('Band 3d Jewellery Anim COmm.MOV'), poster: '',
     tags: ['3D Animation', 'Jewellery'], year: 2024,
   },
   {
     id: 'bibli-p',          title: 'Bibli P',
     category: 'animation',  client: 'Studio Project',
     software: ['Blender'], description: '3D product animation.',
-    thumbnail: '',          videoUrl: A('Bibli P.MOV'),            poster: AP('Bibli P.MOV'),
+    thumbnail: '',          videoUrl: V3('Bibli P.MOV'),            poster: '',
     tags: ['3D Animation'], year: 2024,
   },
   {
     id: 'camera-done',      title: 'Camera Animation',
     category: 'animation',  client: 'Studio Project',
     software: ['Blender', 'Cinema 4D'], description: 'Camera product 3D animation.',
-    thumbnail: '',          videoUrl: A('Camera done.mp4'),        poster: AP('Camera done.mp4'),
+    thumbnail: '',          videoUrl: V3('Camera done.mp4'),        poster: '',
     tags: ['3D Animation', 'Product'], year: 2024,
   },
   {
     id: 'cloth-sim',        title: 'Cloth Simulation',
     category: 'animation',  client: 'Studio Project',
     software: ['Blender'], description: 'Cloth simulation animation.',
-    thumbnail: '',          videoUrl: A('Cloth Sim Ukraine.MOV'),  poster: AP('Cloth Sim Ukraine.MOV'),
+    thumbnail: '',          videoUrl: V3('Cloth Sim Ukraine.MOV'),  poster: '',
     tags: ['3D Animation', 'Simulation'], year: 2024,
   },
   {
     id: 'cytolife',         title: 'CytoLife Commercial',
     category: 'animation',  client: 'CytoLife',
     software: ['Cinema 4D', 'Redshift'], description: '3D animation commercial for CytoLife.',
-    thumbnail: '',          videoUrl: A('CytoLife Anim Comm.MOV'), poster: AP('CytoLife Anim Comm.MOV'),
+    thumbnail: '',          videoUrl: V3('CytoLife Anim Comm.MOV'), poster: '',
     tags: ['3D Animation', 'Commercial'], year: 2024,
   },
   {
     id: 'done-beauty',      title: 'Done Beauty',
     category: 'animation',  client: 'Done Beauty',
     software: ['Cinema 4D', 'Octane'], description: 'Beauty brand 3D product animation.',
-    thumbnail: '',          videoUrl: A('Done Beauty 1920x1080.mp4'), poster: AP('Done Beauty 1920x1080.mp4'),
+    thumbnail: '',          videoUrl: V3('Done Beauty 1920x1080.mp4'), poster: '',
     tags: ['3D Animation', 'Beauty'], year: 2024,
   },
   {
     id: 'loci-glasses',     title: 'Loci Glasses',
     category: 'animation',  client: 'Loci',
     software: ['Blender', 'Cinema 4D'], description: 'Eyewear commercial animation.',
-    thumbnail: '',          videoUrl: A('Loci_Glasses_Commercial_Horizontal.mov'), poster: AP('Loci_Glasses_Commercial_Horizontal.mov'),
+    thumbnail: '',          videoUrl: V3('Loci_Glasses_Commercial_Horizontal.mov'), poster: '',
     tags: ['3D Animation', 'Fashion'], year: 2024,
   },
   {
     id: 'moncler',          title: 'Moncler Commercial',
     category: 'animation',  client: 'Moncler',
     software: ['Cinema 4D', 'Redshift'], description: 'Luxury fashion 3D commercial.',
-    thumbnail: '',          videoUrl: A('Moncler Comm.mov'),       poster: AP('Moncler Comm.mov'),
+    thumbnail: '',          videoUrl: V3('Moncler Comm.mov'),       poster: '',
     tags: ['3D Animation', 'Luxury'], year: 2024,
   },
   {
     id: 'omega',            title: 'Omega Final',
     category: 'animation',  client: 'Studio Project',
     software: ['Cinema 4D', 'Octane'], description: 'Watch product animation.',
-    thumbnail: '',          videoUrl: A('Omega_Final.mp4'),        poster: AP('Omega_Final.mp4'),
+    thumbnail: '',          videoUrl: V3('Omega_Final.mp4'),        poster: '',
     tags: ['3D Animation', 'Watch'], year: 2024,
   },
   {
     id: 'oxyshred',         title: 'OxyShred Commercial',
     category: 'animation',  client: 'OxyShred',
     software: ['Cinema 4D', 'Redshift'], description: 'Supplement product commercial animation.',
-    thumbnail: '',          videoUrl: A('Oxyshred Comm.MP4'),      poster: AP('Oxyshred Comm.MP4'),
+    thumbnail: '',          videoUrl: V3('Oxyshred Comm.MP4'),      poster: '',
     tags: ['3D Animation', 'Commercial'], year: 2024,
   },
   {
     id: 'peel-anim',        title: 'PEEL Commercial',
     category: 'animation',  client: 'PEEL',
     software: ['Blender', 'Cinema 4D'], description: '3D product commercial.',
-    thumbnail: '',          videoUrl: A('PEEL Anim Comm.MOV'),     poster: AP('PEEL Anim Comm.MOV'),
+    thumbnail: '',          videoUrl: V3('PEEL Anim Comm.MOV'),     poster: '',
     tags: ['3D Animation', 'Product'], year: 2024,
   },
   {
     id: 'rayhaan-v2',       title: 'Rayhaan Perfume V2',
     category: 'animation',  client: 'Rayhaan',
     software: ['Cinema 4D', 'Octane'], description: 'Perfume commercial 3D animation v2.',
-    thumbnail: '',          videoUrl: A('rayhaan perfume commercial V2 - Copy.mp4'), poster: AP('rayhaan perfume commercial V2 - Copy.mp4'),
+    thumbnail: '',          videoUrl: V3('rayhaan perfume commercial V2 - Copy.mp4'), poster: '',
     tags: ['3D Animation', 'Perfume'], year: 2024,
   },
   {
     id: 'rayhaan-product',  title: 'Rayhaan 3D Product',
     category: 'animation',  client: 'Rayhaan',
-    software: ['Cinema 4D', 'Octane'], description: 'Full 3D product animation for Rayhaan Perfumes.',
-    thumbnail: '',          videoUrl: A('Rayhaan Perfumes 3D PRODUCT ANIMATION.MP4'), poster: AP('Rayhaan Perfumes 3D PRODUCT ANIMATION.MP4'),
+    software: ['Cinema 4D', 'Octane'], description: 'Full 3D product animation.',
+    thumbnail: '',          videoUrl: V3('Rayhaan Perfumes 3D PRODUCT ANIMATION.MP4'), poster: '',
     tags: ['3D Animation', 'Perfume'], year: 2024,
   },
   {
     id: 'rayhaan',          title: 'Rayhaan',
     category: 'animation',  client: 'Rayhaan',
     software: ['Cinema 4D', 'Octane'], description: 'Rayhaan brand 3D commercial.',
-    thumbnail: '',          videoUrl: A('Rayhaan.MP4'),            poster: AP('Rayhaan.MP4'),
+    thumbnail: '',          videoUrl: V3('Rayhaan.MP4'),            poster: '',
     tags: ['3D Animation', 'Brand'], year: 2024,
   },
   {
     id: 'revolt-card',      title: 'Revolt Card',
     category: 'animation',  client: 'Revolt',
     software: ['Cinema 4D', 'Redshift'], description: 'Fintech card product animation.',
-    thumbnail: '',          videoUrl: A('Revolt Card Anim.MOV'),   poster: AP('Revolt Card Anim.MOV'),
+    thumbnail: '',          videoUrl: V3('Revolt Card Anim.MOV'),   poster: '',
     tags: ['3D Animation', 'Fintech'], year: 2024,
   },
   {
     id: 'steam-deck',       title: 'Steam Deck',
     category: 'animation',  client: 'Studio Project',
     software: ['Blender'], description: 'Gaming device product animation.',
-    thumbnail: '',          videoUrl: A('Steam deck done.mp4'),    poster: AP('Steam deck done.mp4'),
+    thumbnail: '',          videoUrl: V3('Steam deck done.mp4'),    poster: '',
     tags: ['3D Animation', 'Gaming'], year: 2024,
   },
   {
     id: 'tellmi',           title: 'Tellmi Animation',
     category: 'animation',  client: 'Tellmi',
     software: ['Cinema 4D', 'Octane'], description: '3D animation for Tellmi brand.',
-    thumbnail: '',          videoUrl: A('Tellmi Anim.MOV'),        poster: AP('Tellmi Anim.MOV'),
+    thumbnail: '',          videoUrl: V3('Tellmi Anim.MOV'),        poster: '',
     tags: ['3D Animation', 'Brand'], year: 2024,
   },
   {
     id: 'water-sim',        title: 'Water Simulation',
     category: 'animation',  client: 'Studio Project',
     software: ['Blender'], description: 'Fluid simulation animation.',
-    thumbnail: '',          videoUrl: A('Water Sim.MOV'),          poster: AP('Water Sim.MOV'),
+    thumbnail: '',          videoUrl: V3('Water Sim.MOV'),          poster: '',
     tags: ['3D Animation', 'Simulation'], year: 2024,
   },
 ]
