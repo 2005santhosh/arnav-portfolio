@@ -106,7 +106,11 @@ export default function Contact() {
               <span style={{ fontSize: '11px', color: '#bbb' }}>Opens WhatsApp</span>
               <button
                 ref={btnRef} type="submit"
-                onMouseMove={onMove} onMouseLeave={onLeave}
+                onMouseMove={onMove}
+                onMouseLeave={e => {
+                  onLeave()
+                  ;(e.currentTarget as HTMLElement).style.background = '#111'
+                }}
                 style={{
                   padding: '8px 20px', borderRadius: '5px',
                   background: '#111', color: '#fff',
@@ -114,7 +118,6 @@ export default function Contact() {
                   transition: 'background 0.15s',
                 }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#333' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#111' }}
               >
                 {loading ? 'Opening…' : 'Send message →'}
               </button>
