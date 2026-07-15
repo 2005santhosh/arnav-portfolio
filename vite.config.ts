@@ -4,9 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
-  // GitHub Pages serves from /arnav-portfolio/ subdirectory
-  base: '/arnav-portfolio/',
-
+  // No base needed — Vercel serves from root /
   plugins: [
     react(),
     tailwindcss(),
