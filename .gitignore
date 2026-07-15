@@ -1,0 +1,26 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Source asset videos — served from public/videos/ instead
+src/assets/motion_graphics/*.mp4
+src/assets/motion_graphics/*.MP4
+src/assets/motion_graphics/*.MOV
+src/assets/motion_graphics/*.mov
+src/assets/3d animation/
