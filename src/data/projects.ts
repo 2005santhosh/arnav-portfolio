@@ -301,19 +301,19 @@ export const testimonials: Testimonial[] = [
     id: 't1', name: 'Rahul Mehta', role: 'Founder', company: 'Flow IQ',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80',
     text: "Arnav transformed our product vision into a video users instantly connected with. We saw a 40% uplift in signups.",
-    rating: 5, isVideo: true, videoUrl: M('Flow IQ.mp4'),
+    rating: 5, isVideo: true, videoUrl: MOTION.flowIq,
   },
   {
     id: 't2', name: 'Priya Nair', role: 'Marketing Lead', company: 'Cred',
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b5e5?w=300&q=80',
     text: "He engineers emotion. The Cred video felt premium in a way we'd never achieved before.",
-    rating: 5, isVideo: true, videoUrl: M('Cred app.mp4'),
+    rating: 5, isVideo: true, videoUrl: MOTION.credApp,
   },
   {
     id: 't3', name: 'Siddharth Rao', role: 'Head of Growth', company: 'Parcel',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80',
     text: 'The multi-token explainer has become our most-shared piece of content by a huge margin.',
-    rating: 5, isVideo: true, videoUrl: M('Parcel multi-token.mp4'),
+    rating: 5, isVideo: true, videoUrl: MOTION.parcelMulti,
   },
   {
     id: 't4', name: 'Ananya Sharma', role: 'Brand Director', company: 'Crizpo',
