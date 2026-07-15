@@ -94,7 +94,8 @@ function VideoCard({ p, onClick }: { p: Project; onClick: () => void }) {
 
   const onEnter = useCallback(() => {
     setHov(true)
-    vRef.current?.play().catch(() => {})
+    const v = vRef.current; if (!v) return
+    v.play().catch(() => {})
   }, [])
 
   const onLeave = useCallback(() => {
@@ -120,19 +121,19 @@ function VideoCard({ p, onClick }: { p: Project; onClick: () => void }) {
     >
       <div style={{ position: 'relative', aspectRatio: '16/10', background: '#1a1a1a', overflow: 'hidden' }}>
 
-        {/* Video element — preload="metadata" fetches only first-frame data */}
+        {/* Video element — poster shows first frame instantly from Cloudinary */}
         {inView && p.videoUrl && (
           <video
             ref={vRef}
             src={p.videoUrl}
+            poster={p.poster}
             muted loop playsInline
-            preload="metadata"
+            preload="none"
             style={{
               position: 'absolute', inset: 0,
               width: '100%', height: '100%',
               objectFit: 'cover', display: 'block',
-              opacity: ready ? 1 : 0,
-              transition: 'opacity 0.2s ease',
+              opacity: 1,
             }}
           />
         )}
@@ -144,12 +145,6 @@ function VideoCard({ p, onClick }: { p: Project; onClick: () => void }) {
             background: '#111',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <div style={{
-              width: '20px', height: '20px', borderRadius: '50%',
-              border: '2px solid #333', borderTopColor: '#888',
-              animation: 'spin 0.7s linear infinite',
-            }} />
-            <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
           </div>
         )}
 
