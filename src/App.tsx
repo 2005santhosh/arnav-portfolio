@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Nav } from '@/components/Nav'
 
 const Work         = lazy(() => import('@/pages/Work'))
@@ -42,5 +42,5 @@ function AppInner() {
 }
 
 export default function App() {
-  return <BrowserRouter><AppInner /></BrowserRouter>
+  return <HashRouter><AppInner /></HashRouter>
 }

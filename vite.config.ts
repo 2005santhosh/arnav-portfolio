@@ -4,6 +4,9 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
+  // GitHub Pages serves from /arnav-portfolio/ subdirectory
+  base: '/arnav-portfolio/',
+
   plugins: [
     react(),
     tailwindcss(),
@@ -17,8 +20,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id: string) => {
-          if (id.includes('three') || id.includes('@react-three')) return 'three'
-          if (id.includes('framer-motion') || id.includes('motion-dom')) return 'framer'
           if (id.includes('gsap')) return 'gsap'
           if (id.includes('node_modules')) return 'vendor'
         },
