@@ -2,16 +2,32 @@
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: #fff; }
+
+  html {
+    background: #fff;
+    /* Prevent white flash between route transitions */
+    min-height: 100%;
+  }
+
   body {
+    background: #fff;
+    color: #111;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: #111;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    min-height: 100vh;
   }
+
+  /* Ensure root div always fills screen — no blank gaps */
+  #root {
+    min-height: 100vh;
+    background: #fff;
+  }
+
   a { text-decoration: none; color: inherit; }
   button { font-family: inherit; }
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
 }
